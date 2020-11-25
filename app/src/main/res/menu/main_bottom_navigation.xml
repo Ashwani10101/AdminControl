@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottomBarHome"
+        android:icon="@drawable/bottombar_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/bottomBarAccepted"
+        android:icon="@drawable/bottombar_accepted"
+        android:title="Accepted" />
+    <item
+        android:id="@+id/bottomBarCanceled"
+        android:icon="@drawable/bottombar_cancelled"
+        android:title="Canceled" />
+    <item
+        android:id="@+id/bottomBarDispatched"
+        android:icon="@drawable/bottombar_dispatched"
+        android:title="Dispatched" />
+
+    <item
+        android:id="@+id/bottomBarAdd"
+        android:icon="@drawable/bottombar_add"
+        android:title="Add New" />
+</menu>

@@ -1,0 +1,30 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="mainAdminControl" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/colorPrimaryDark</item>
+        <!-- Secondary brand color. -->
+       <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorSecondaryVariant">@color/colorPrimary</item>
+        <item name="colorOnSecondary">@color/colorPrimaryDark</item>
+
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+
+        <!--Search bar-->
+        <item name="android:editTextColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
+
+        <item name="colorControlNormal">@color/white</item>
+
+    </style>
+
+    <!-- Splash Screen-->
+    <style name="MainActivitySplashScreen" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+
+    </style>
+
+
+</resources>
