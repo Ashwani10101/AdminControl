@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity()
             }
 
         }
-
+//
         bottomNavigationView.selectedItemId = R.id.bottomBarHome
     }
 }
