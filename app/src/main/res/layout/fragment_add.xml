@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/l_white"
     android:orientation="vertical"
     tools:context=".fragments.AddFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="?android:attr/actionBarSize">
 
         <LinearLayout
             android:id="@+id/barlinerlayout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="match_parent"
             android:background="@color/colorPrimary"
             android:gravity="center"
             android:orientation="horizontal"
@@ -28,14 +27,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:layoutDirection="rtl">
+                android:layoutDirection="rtl"
+                android:searchIcon="@drawable/addfragment_search">
 
             </SearchView>
 
             <ImageButton
+                android:id="@+id/addFragment_AddButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ripple_transparent_background"
+
+                android:background="@drawable/ripple_round_dark"
                 android:src="@drawable/addfragment_add" />
 
         </LinearLayout>
@@ -55,18 +57,70 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/addFragment_noInternetLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/no_internet"
+            android:gravity="center"
+            android:text="No Internet!"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:text="Selete Category - " />
+
+        <Spinner
+            android:id="@+id/addFragment_spinner"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:backgroundTint="#000000"
+            android:elevation="2dp" />
+    </LinearLayout>
+
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/addFragment_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/addFragment_refreshLayout"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@color/white" >
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/addFragment_recycleview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                tools:listitem="@layout/card_fragment_add">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </LinearLayout>

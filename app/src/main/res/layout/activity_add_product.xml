@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/soft_white"
+    android:scrollbarThumbVertical="@color/grey"
+    tools:context=".AddProductActivity">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="15dp"
+      android:scrollbarSize="8dp"
+      android:scrollbars="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+      <ImageView
+          android:id="@+id/addproduct_image_productImage"
+          android:layout_width="0dp"
+          android:layout_height="200dp"
+          android:layout_marginEnd="10dp"
+          android:layout_weight="1"
+          android:background="@drawable/boarder_outline_grey"
+          app:srcCompat="@drawable/no_image_selected" />
+
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+
+        <Button
+            android:id="@+id/addproduct_btn_removeImage"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ripple_with_background"
+            android:drawableStart="@drawable/addproduct_remove"
+            android:drawablePadding="5dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Remove"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary" />
+
+        <Button
+            android:id="@+id/addproduct_btn_addFromGallery"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ripple_with_background"
+            android:drawableStart="@drawable/addproduct_add"
+            android:drawablePadding="5dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Images"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary" />
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Select Category : "
+            android:textColor="@color/colorPrimary" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:orientation="vertical">
+
+          <Spinner
+              android:id="@+id/addproduct_spinner_Category"
+              android:layout_width="200dp"
+              android:layout_height="30dp"
+              android:layout_marginVertical="4dp"
+              android:elevation="2dp" />
+        </LinearLayout>
+
+
+      </LinearLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:background="#FFFFFF"
+          android:hint="Product Name"
+          android:paddingTop="7dp"
+          android:textColorHint="@color/l_grey">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/addproduct_edit_productName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:textSize="16sp" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_marginTop="10dp"
+          android:background="#FFFFFF"
+          android:hint="Price"
+          android:paddingTop="7dp"
+          android:textColorHint="@color/l_grey">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/addproduct_edit_productPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:inputType="numberSigned"
+            android:textSize="16sp" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:background="#FFFFFF"
+          android:hint="Details"
+          android:paddingTop="7dp"
+          android:textColorHint="@color/l_grey">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/addproduct_edit_productDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FFFFFF"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:maxLines="6"
+            android:minLines="2"
+            android:textSize="16sp" />
+
+      </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+      <Button
+          android:id="@+id/addproduct_cancelBtn"
+          android:layout_width="wrap_content"
+          android:layout_height="40dp"
+          android:layout_marginEnd="5dp"
+          android:layout_weight="1"
+          android:background="@drawable/ripple_with_background"
+          android:text="Cancel"
+          android:textColor="@color/colorPrimary" />
+
+      <Button
+          android:id="@+id/addproduct_saveBtn"
+          android:layout_width="wrap_content"
+          android:layout_height="40dp"
+          android:layout_weight="1"
+          android:background="@drawable/ripple_with_background"
+          android:text="Save"
+          android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+</ScrollView>
+

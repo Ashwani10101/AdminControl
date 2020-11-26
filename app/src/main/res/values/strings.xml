@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Admin Control</string>
+    <string name="Rs">\u20B9</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

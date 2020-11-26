@@ -1,12 +1,12 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="mainAdminControl" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="mainAdminControl" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimary</item>
         <item name="colorOnPrimary">@color/colorPrimaryDark</item>
         <!-- Secondary brand color. -->
-       <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorPrimary</item>
         <item name="colorSecondaryVariant">@color/colorPrimary</item>
         <item name="colorOnSecondary">@color/colorPrimaryDark</item>
 
@@ -16,14 +16,41 @@
         <item name="android:editTextColor">@android:color/white</item>
         <item name="android:textColorHint">@android:color/white</item>
 
-        <item name="colorControlNormal">@color/white</item>
 
     </style>
+
+    <!-- Sub Activity -->
+    <style name="subActivityTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Bridge">
+        <item name="colorOnPrimary">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">#c5c5c5</item>
+        <item name="colorControlActivated">@color/red</item>
+        <item name="colorControlHighlight">@color/red</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowMinWidthMajor">100%</item>
+        <item name="windowMinWidthMinor">100%</item>
+
+
+    </style>
+
 
     <!-- Splash Screen-->
     <style name="MainActivitySplashScreen" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/launch_screen</item>
 
+    </style>
+
+    <style name="defaultTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/colorPrimaryDark</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorSecondaryVariant">@color/colorPrimary</item>
+        <item name="colorOnSecondary">@color/colorPrimaryDark</item>
+
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
 
