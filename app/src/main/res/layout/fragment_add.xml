@@ -27,8 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:layoutDirection="rtl"
-                android:searchIcon="@drawable/addfragment_search">
+                android:layoutDirection="rtl">
 
             </SearchView>
 
@@ -56,23 +55,6 @@
             android:textSize="18sp" />
 
     </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/addFragment_noInternetLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/no_internet"
-            android:gravity="center"
-            android:text="No Internet!"
-            android:textSize="24sp" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

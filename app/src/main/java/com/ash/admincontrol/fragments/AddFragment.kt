@@ -1,7 +1,6 @@
 package com.ash.admincontrol.fragments
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,15 +30,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AddFragment : Fragment(), AddFragmentRecycleViewInterface ,NetworkConnectivityListener
+class AddFragment : Fragment(), AddFragmentRecycleViewInterface
 {
     private val TAG ="AddFragmentActivity"
     private lateinit var recyclerviewAdaptor: AddFragmentRecycleViewAdaptor
-    private lateinit var noInternetLayout :LinearLayout
     private lateinit var  recycleView :RecyclerView
     private lateinit var  homeLayout: CoordinatorLayout
+    private lateinit var  spinner: Spinner
+    private lateinit var  searchView: SearchView
 
-    private var previousSate = true
 
     companion object
     {
@@ -55,18 +53,15 @@ class AddFragment : Fragment(), AddFragmentRecycleViewInterface ,NetworkConnecti
 
         recycleView = view.findViewById<RecyclerView>(R.id.addFragment_recycleview)
         homeLayout = view.findViewById(R.id.addFragment_home)
-        noInternetLayout = view.findViewById<LinearLayout>(R.id.addFragment_noInternetLayout)
 
-        val searchView = view.findViewById<SearchView>(R.id.addFragment_Searchbar)
+        spinner = view.findViewById<Spinner>(R.id.addFragment_spinner)
+        searchView = view.findViewById<SearchView>(R.id.addFragment_Searchbar)
         val textViewTitle = view.findViewById<TextView>(R.id.addFragment_textviewTitle)
-        val spinner = view.findViewById<Spinner>(R.id.addFragment_spinner)
+
         val refreshLayout = view.findViewById<SwipeRefreshLayout>(R.id.addFragment_refreshLayout)
 
         val addBtn = view.findViewById<ImageButton>(R.id.addFragment_AddButton)
         addBtn.setOnClickListener{onClickAdd()}
-
-        //checking internet
-        noInternetLayout.visibility = if (!ConnectivityStateHolder.isConnected) View.VISIBLE else View.GONE
 
         initSpinner(spinner)
         initRecycleView(recycleView)
@@ -153,7 +148,7 @@ class AddFragment : Fragment(), AddFragmentRecycleViewInterface ,NetworkConnecti
                 override fun onChildRemoved(snapshot: DataSnapshot)
                 {
                     val product = snapshot.getValue(Product::class.java)
-                    recyclerviewAdaptor.removeProduct(product!!)
+                  // recyclerviewAdaptor.removeProduct(product!!)
                 }
 
                 override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?)
@@ -209,19 +204,28 @@ class AddFragment : Fragment(), AddFragmentRecycleViewInterface ,NetworkConnecti
             {
                 override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View, position: Int, id: Long)
                 {
-                    val name = selectedItemView.findViewById<TextView>(android.R.id.text1).text.toString()
-                    //  show("Spinner Selected : $name")
-                    if (name == "All")
+                    //val selectedItem = selectedItemView.findViewById<TextView>(android.R.id.text1).text.toString()
+                   // var selectedItem = spinner.selectedItem
+                    //var searchedTxt = searchView.query
+
+                    val selectedItem :String? = if(spinner.selectedItem.toString() =="All")
                     {
-                        recyclerviewAdaptor.filter.filter("")
+                        null
+                    }else
+                    {
+                        spinner.selectedItem.toString()
+                    }
+                    val searchedTxt :String? = if(searchView.query==null ||  searchView.query.toString().trim().isBlank())
+                    {
+                        null
                     } else
                     {
-                        recyclerviewAdaptor.filter.filter(name)
+                        searchView.query.toString()
                     }
+                    recyclerviewAdaptor.filter(searchedTxt,selectedItem)
                 }
                 override fun onNothingSelected(parentView: AdapterView<*>?)
                 {
-                    recyclerviewAdaptor.filter.filter("")
                 }
             }
         }
@@ -256,11 +260,24 @@ class AddFragment : Fragment(), AddFragmentRecycleViewInterface ,NetworkConnecti
 
             override fun onQueryTextChange(query: String?): Boolean
             {
-                if (query != null && query.toString().isNotEmpty())
+                val selectedItem :String? = if(spinner.selectedItem.toString() =="All")
                 {
-                    recyclerviewAdaptor.filter.filter(query)
+                    null
+                }else
+                {
+                    spinner.selectedItem.toString()
                 }
+                val searchedTxt :String? = if(searchView.query==null ||  searchView.query.toString().trim().isBlank())
+                {
+                    null
+                } else
+                {
+                    searchView.query.toString()
+                }
+                recyclerviewAdaptor.filter(searchedTxt,selectedItem)
+
                 return false
+
             }
 
         })
@@ -281,7 +298,7 @@ class AddFragment : Fragment(), AddFragmentRecycleViewInterface ,NetworkConnecti
 
     }
 
-    override fun networkConnectivityChanged(event: Event)
+/*    override fun networkConnectivityChanged(event: Event)
     {
         when (event) {
             is Event.ConnectivityEvent ->
@@ -297,12 +314,9 @@ class AddFragment : Fragment(), AddFragmentRecycleViewInterface ,NetworkConnecti
                 }
             }
         }
-    }
+    }*/
 
-    private fun showToast(msg: String)
-    {
-        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-    }
+
 
 
 

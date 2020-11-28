@@ -11,13 +11,25 @@
         android:id="@+id/frame_layout"
         android:layout_width="307dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bottom_navigation_bar"
+        android:layout_above="@+id/addFragment_noInternetLayout"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true">
 
 
     </FrameLayout>
+
+    <TextView
+        android:id="@+id/addFragment_noInternetLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_navigation_bar"
+        android:layout_gravity="center"
+        android:background="@color/red"
+        android:gravity="center"
+        android:text="No Internet!"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_bar"
@@ -30,5 +42,8 @@
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        app:menu="@menu/main_bottom_navigation" />
+        app:menu="@menu/main_bottom_navigation">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 </RelativeLayout>

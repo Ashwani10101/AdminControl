@@ -2,11 +2,10 @@ package com.ash.admincontrol.adaptor
 
 import android.util.Log
 import android.view.*
-import android.widget.Filter
-import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ash.admincontrol.R
 import com.ash.admincontrol.interfaces.AddFragmentRecycleViewInterface
@@ -18,34 +17,37 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class AddFragmentRecycleViewAdaptor(val addFragmentRecycleViewInterface: AddFragmentRecycleViewInterface) : RecyclerView.Adapter<AddFragmentRecycleViewAdaptor.MyViewHolder>(), Filterable
+class AddFragmentRecycleViewAdaptor(val addFragmentRecycleViewInterface: AddFragmentRecycleViewInterface) : RecyclerView.Adapter<AddFragmentRecycleViewAdaptor.MyViewHolder>()//, Filterable
 {
+    private var permanentList = ArrayList<Product>()
+    private var filteringList = ArrayList<Product>()  // Used for filtering in search bar
 
 
-    private val productList = ArrayList<Product>()
-    private var productListAll = ArrayList<Product>()// Used for filtering in search bar
-
-    fun addProductList(productEntityList: ArrayList<Product>)
+    fun addProduct(product : Product)
     {
+        filteringList.add(product)
+        permanentList.add(product)
 
-
-        productList.addAll(productEntityList)
-        productListAll.addAll(productEntityList) //= ArrayList<Product>().apply { addAll(productEntityList) }
-
-        notifyDataSetChanged()
-    }
-
-    fun sort()
-    {
-      // productEntityList.sortWith { lhs: Product, rhs: Product -> lhs.name.toLowerCase().compareTo(rhs.name.toLowerCase()) }
-    }
-
-    fun addProduct(product: Product)
-    {
-        productList.add(product)
-        productListAll.add(product)
         CoroutineScope(Dispatchers.Main).launch {
             notifyItemInserted(itemCount)//itemCount
+        }
+    }
+
+    fun clear()
+    {
+        filteringList.clear()
+        permanentList.clear()
+        CoroutineScope(Dispatchers.Main).launch {
+            notifyDataSetChanged()
+        }
+    }
+
+    fun removeProduct(pos : Int) {
+        filteringList.removeAt(pos)
+        permanentList.removeAt(pos)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            notifyItemRemoved(pos)//itemCount
         }
 
     }
@@ -53,20 +55,17 @@ class AddFragmentRecycleViewAdaptor(val addFragmentRecycleViewInterface: AddFrag
     fun removeProduct(product: Product)
     {
         var removedFrom:Int? = null
-        for(i in 0..productListAll.size)
+        for(i in 0..filteringList.size)
         {
-            val p = productListAll[i]
+            val p = filteringList[i]
             if(p.key == product.key)
             {
-                productListAll.removeAt(i)
-                productList.remove(p)
+                filteringList.removeAt(i)
+                permanentList.removeAt(i)
                 removedFrom = i
                 break
             }
         }
-        //trimming
-        productList.trimToSize()
-        productListAll.trimToSize()
 
         if(removedFrom!=null)
         {
@@ -79,16 +78,13 @@ class AddFragmentRecycleViewAdaptor(val addFragmentRecycleViewInterface: AddFrag
             CoroutineScope(Dispatchers.Main).launch {
                 notifyDataSetChanged()
             }
-
         }
 
     }
 
-    fun clear()
-    {
-        productList.clear()
-        productListAll.clear()
-    }
+
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder
     {
@@ -98,17 +94,15 @@ class AddFragmentRecycleViewAdaptor(val addFragmentRecycleViewInterface: AddFrag
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int)
     {
-        return holder.bindData(productList[position])
+        return holder.bindData(filteringList[position])
     }
 
-    override fun getItemCount(): Int
-    {
-        return productList.size
+    override fun getItemCount(): Int {
+        return filteringList.size
     }
 
     inner class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view),View.OnCreateContextMenuListener
     {
-
         private val productImage: ImageView = view.findViewById<ImageView>(R.id.imageView_ProductImage)
         private val productName: TextView = view.findViewById<TextView>(R.id.textView_ProductName)
         private val productDetails: TextView = view.findViewById<TextView>(R.id.textView_ProductDetails)
@@ -120,16 +114,6 @@ class AddFragmentRecycleViewAdaptor(val addFragmentRecycleViewInterface: AddFrag
         fun bindData(product: Product)
         {
             myProduct = product
-            /*            if (product.image != null)
-            {
-                Picasso.get().load(product.image).resize(50, 50).centerCrop().into(productImage)
-
-              //  productImage.setImageBitmap(product.image)// setImageBitmap(product.image)
-            } else
-            {
-                productImage.setImageResource(R.drawable.no_image_selected)
-            }*/
-
             productName.text = product.name
             productDetails.text = product.details
             productPrice.text = product.price.toString()
@@ -138,20 +122,15 @@ class AddFragmentRecycleViewAdaptor(val addFragmentRecycleViewInterface: AddFrag
             cardProduct.setOnClickListener {
                 addFragmentRecycleViewInterface.onCardClick(myProduct)
             }
-
             view.setOnCreateContextMenuListener(this)
         }
 
 
         override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?)
         {
-            //  if(myProfile.title.isNotEmpty()){   menu!!.setHeaderTitle(myProfile.title)} else { menu!!.setHeaderTitle("-> No Title <-")}
-
-           // val editMenuItem: MenuItem = menu!!.add(Menu.NONE, v!!.id, 2, "Edit")
+            // val editMenuItem: MenuItem = menu!!.add(Menu.NONE, v!!.id, 2, "Edit")
             val deleteMenuItem: MenuItem = menu!!.add(Menu.NONE, v!!.id, 3, "Delete")
-
-
-          //  editMenuItem.setOnMenuItemClickListener(onEditMyActionClickListener)
+            // editMenuItem.setOnMenuItemClickListener(onEditMyActionClickListener)
             deleteMenuItem.setOnMenuItemClickListener(onDeleteMyActionClickListener)
 
         }
@@ -176,68 +155,74 @@ class AddFragmentRecycleViewAdaptor(val addFragmentRecycleViewInterface: AddFrag
     }
 
 
-    override fun getFilter(): Filter
-    {
-        return filter()
-    }
-
-
-    private fun filter(): Filter
-    {
-        return object : Filter()
-        {
-            //Run in background thread
-            override fun performFiltering(charSequence: CharSequence?): FilterResults
-            {
-                val filterList = ArrayList<Product>()
-
-
-                if (charSequence == null || charSequence.toString().isEmpty() || charSequence.toString() == "")
-                {
-                    filterList.addAll(productListAll)
-                } else
-                {
-                    for (productEntity in productListAll) {
-                        if (productEntity.name.toLowerCase(Locale.ROOT).trim().contains(charSequence.toString().toLowerCase(Locale.ROOT).trim()) )
-                        {
-                            filterList.add(productEntity)
-                        }
-                        if (productEntity.details.toLowerCase(Locale.ROOT).trim().contains(charSequence.toString().toLowerCase(Locale.ROOT).trim()))
-                        {
-                            filterList.add(productEntity)
-                        }
-
-                        if (productEntity.category.toLowerCase(Locale.ROOT).trim().contains(charSequence.toString().toLowerCase(Locale.ROOT).trim()))
-                        {
-                            filterList.add(productEntity)
-                        }
-
-
-
-                    }
-                }
-
-                val filterResult = FilterResults()
-                filterResult.values = filterList
-
-                return filterResult
-            }
-
-            //Run in UI thread
-            override fun publishResults(constraint: CharSequence?, filterResult: FilterResults?)
-            {
-                productList.clear()
-                productList.addAll(filterResult!!.values as Collection<Product>)
-                notifyDataSetChanged()
-            }
-        }
-    }
-
-
     private fun show(message: String)
     {
         Log.i("###", message)
     }
 
+    fun filter(searchTxt:String?, categoryTxt:String?)
+    {
+        val newList = ArrayList<Product>()
+
+        if(searchTxt!=null && categoryTxt!=null )
+        {
+            for(p in permanentList)
+            {
+                if(p.name.toLowerCase(Locale.ROOT).trim().contains(searchTxt.toLowerCase(Locale.ROOT).trim()) &&
+                        p.category.toLowerCase(Locale.ROOT).trim() == categoryTxt.toLowerCase(Locale.ROOT).trim())
+                {
+                    newList.add(p)
+                }
+            }
+        } else if(searchTxt==null && categoryTxt==null )
+        {
+            newList.clear()
+            newList.addAll(permanentList)
+
+        } else if(searchTxt!=null && categoryTxt==null )
+        {
+            for(p in permanentList)
+            {
+                if(p.name.toLowerCase(Locale.ROOT).trim().contains(searchTxt.toLowerCase(Locale.ROOT).trim()))
+                {
+                    newList.add(p)
+                }
+            }
+        }else if(searchTxt==null && categoryTxt!=null )
+        {
+            for(p in permanentList)
+            {
+                if(p.category.toLowerCase(Locale.ROOT).trim() == categoryTxt.toLowerCase(Locale.ROOT).trim())
+                {
+                    newList.add(p)
+                }
+            }
+        }
+
+        DiffUtil.calculateDiff(ProductCategoryDiffCallback(newList,filteringList), false).dispatchUpdatesTo(this)
+        filteringList = newList
+
+    }
+
+
+
 
 }
+
+//  Return the list of instruction to covert a recycle view list to something else
+class ProductCategoryDiffCallback(private val newItem : List<Product>, private val oldItem : List<Product>) : DiffUtil.Callback() {
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldItem[oldItemPosition].key  == newItem[newItemPosition].key
+    }
+
+    override fun getOldListSize(): Int = oldItem.size
+
+    override fun getNewListSize(): Int = newItem.size
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldItem[oldItemPosition] == newItem[newItemPosition]
+        // return oldRow == newRow
+    }
+}
+
+

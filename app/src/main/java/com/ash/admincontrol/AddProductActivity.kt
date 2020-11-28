@@ -233,10 +233,9 @@ class AddProductActivity : AppCompatActivity() {
                 return setCentered(super.getDropDownView(position, convertView, parent))!!
             }
 
-            private fun setCentered(view: View): View? {
+            private fun setCentered(view: View): View {
                 val textView = view.findViewById<View>(android.R.id.text1) as TextView
                 textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
-                textView.isAllCaps = true
 
 
                 return view

@@ -6,9 +6,9 @@
         <item name="colorPrimaryVariant">@color/colorPrimary</item>
         <item name="colorOnPrimary">@color/colorPrimaryDark</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorPrimary</item>
-        <item name="colorSecondaryVariant">@color/colorPrimary</item>
-        <item name="colorOnSecondary">@color/colorPrimaryDark</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
 
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
 
@@ -17,14 +17,21 @@
         <item name="android:textColorHint">@android:color/white</item>
 
 
+        <!-- all the icon colors-->
+        <item name="colorControlNormal">@color/l_white</item>
+
+
     </style>
 
     <!-- Sub Activity -->
     <style name="subActivityTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Bridge">
         <item name="colorOnPrimary">@color/colorPrimaryDark</item>
         <item name="colorControlNormal">#c5c5c5</item>
-        <item name="colorControlActivated">@color/red</item>
-        <item name="colorControlHighlight">@color/red</item>
+
+        <!-- the Curser color in search bar-->
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <!-- Touch ripplr color when u touch the search icon or any button-->
+        <item name="colorControlHighlight">@color/l_white</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -41,17 +48,6 @@
 
     </style>
 
-    <style name="defaultTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimary</item>
-        <item name="colorOnPrimary">@color/colorPrimaryDark</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorPrimary</item>
-        <item name="colorSecondaryVariant">@color/colorPrimary</item>
-        <item name="colorOnSecondary">@color/colorPrimaryDark</item>
-
-        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
-    </style>
 
 
 </resources>
